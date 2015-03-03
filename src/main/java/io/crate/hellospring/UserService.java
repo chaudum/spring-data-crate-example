@@ -1,12 +1,13 @@
 package io.crate.hellospring;
 
-
+import io.crate.action.sql.SQLRequest;
+import io.crate.client.CrateClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.crate.core.CrateTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.List;
+import java.util.Collection;
+
 
 @Service
 public class UserService {
@@ -14,34 +15,37 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserService() {
-        this.userRepository = null;
+    @Autowired
+    private CrateTemplate crateTemplate;
+
+    @Autowired
+    private CrateClient crateClient;
+
+    private Long now() {
+        return System.currentTimeMillis();
     }
 
-    public UserService(UserRepository userRepository) {
-       this.userRepository = userRepository;
-    }
-
-    public void doStuff(){
-
+    public void deleteUsers() {
         userRepository.deleteAll();
-
-        User christian = new User("Christian", "Haudum", "christian.haudum@crate.io", 0,
-                new String[]{"javascript"}, new Object());
-        userRepository.save(christian);
-
-        User bernd = new User("Bernd", "Dorn", "bernd@crate.io", 0,
-                new String[]{"python", "cto"}, new Object());
-        userRepository.save(bernd);
-
-        User jordi = new User("Mathias", "Fussenegger", "mathias@crate.io", 0,
-                new String[]{"java"}, new Object());
-        userRepository.save(jordi);
-
-//        User dbUser = userRepository.findById(user.getId());
-//        List<User> users = userRepository.findAll();
-
     }
 
+    public User createUser(String email, String firstName, String lastName) {
+        User user = new User(firstName, lastName, email, now());
+        crateTemplate.insert(user);
+        return user;
+    }
+
+    public void updateUser(User user) {
+        crateTemplate.update(user);
+    }
+
+    public Collection<User> allUsers() {
+        return userRepository.findAll();
+    }
+
+    public void refresh() {
+        SQLRequest request = new SQLRequest("refresh table users");
+        crateClient.sql(request).actionGet();
+    }
 }
 
