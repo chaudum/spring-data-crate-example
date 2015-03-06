@@ -11,7 +11,7 @@ import org.springframework.data.crate.repository.config.EnableCrateRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-@EnableCrateRepositories(basePackages = "io.crate")
+@EnableCrateRepositories
 class ApplicationConfig extends AbstractCrateConfiguration {
 
     @Bean
