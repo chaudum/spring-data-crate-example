@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.crate.core.mapping.annotations.Table;
 
-import javax.validation.constraints.Null;
 import java.util.HashMap;
 
 
