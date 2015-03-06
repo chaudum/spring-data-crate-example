@@ -25,16 +25,15 @@ public class CrateController {
         User rizwan = userService.createUser("rizwan.idrees@example.com", "Rizwan", "Idrees");
         User hasnain = userService.createUser("hasnain.javed@example.com", "Hasnain", "Javed");
 
-        // refresh table to make sure we get latest version of the documents
-        userService.refresh();
-
         // update users
         christian.setTags(new String[]{"crateio","python"});
         christian.setAttributes(new HashMap<String, Object>(){{ put("company","Crate.IO"); }});
         userService.updateUser(christian);
+
         rizwan.setTags(new String[]{"kptechnologylab","java","spring framework"});
         rizwan.setAttributes(new HashMap<String, Object>(){{ put("company", "KP Technology Lab"); }});
         userService.updateUser(rizwan);
+
         hasnain.setTags(new String[]{"kptechnologylab","java","spring data"});
         hasnain.setAttributes(new HashMap<String, Object>(){{ put("company", "KP Technology Lab"); }});
         userService.updateUser(hasnain);
@@ -55,9 +54,8 @@ public class CrateController {
             for (Map.Entry<String, Object> map : user.getAttributes().entrySet()) {
                 System.out.println(String.format("   %s : %s", map.getKey(), map.getValue().toString()));
             }
-            System.out.println("--------------------------");
+            System.out.println("======================");
         }
-        System.out.println("======================");
 
         return userService.allUsers();
     }

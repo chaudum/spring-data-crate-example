@@ -1,8 +1,8 @@
 package io.crate.hellospring;
 
 import io.crate.action.sql.SQLRequest;
-import io.crate.client.CrateClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crate.core.CrateAction;
 import org.springframework.data.crate.core.CrateTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +12,22 @@ import java.util.Collection;
 @Service
 public class UserService {
 
+    private static final class RefreshUserTableAction implements CrateAction {
+        @Override
+        public SQLRequest getSQLRequest() {
+            return new SQLRequest(getSQLStatement());
+        }
+        @Override
+        public String getSQLStatement() {
+            return "refresh table users";
+        }
+    }
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private CrateTemplate crateTemplate;
-
-    @Autowired
-    private CrateClient crateClient;
 
     private Long now() {
         return System.currentTimeMillis();
@@ -31,7 +39,7 @@ public class UserService {
 
     public User createUser(String email, String firstName, String lastName) {
         User user = new User(firstName, lastName, email, now());
-        crateTemplate.insert(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -44,8 +52,7 @@ public class UserService {
     }
 
     public void refresh() {
-        SQLRequest request = new SQLRequest("refresh table users");
-        crateClient.sql(request).actionGet();
+        crateTemplate.execute(new RefreshUserTableAction());
     }
 }
 
