@@ -44,7 +44,8 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        crateTemplate.update(user);
+        // userRepository.save is clever enough to distinguish between insert and update
+        userRepository.save(user);
     }
 
     public Collection<User> allUsers() {

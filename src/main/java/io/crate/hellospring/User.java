@@ -9,7 +9,7 @@ import org.springframework.data.crate.core.mapping.annotations.Table;
 import java.util.HashMap;
 
 
-@Table(name="users")
+@Table(name="users", refreshInterval=500, numberOfReplicas="0-all")
 public class User {
 
     @Id
