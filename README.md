@@ -10,4 +10,6 @@ Spring Boot Application with Spring Data Crate
 
     ./gradlew clean bootRun
 
+## Howto
 
+See https://crate.io/a/using-sprint-data-crate-with-your-java-rest-application/
