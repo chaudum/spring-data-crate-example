@@ -1,6 +1,6 @@
 # spring-data-crate-example
 
-**Spring Boot Application with [Spring Data Crate](https://github.com/KPTechnologyLab/spring-data-crate)**
+**Spring Boot Application with [Spring Data Crate](https://github.com/crate/spring-data-crate)**
 
 ## Requirements
 
@@ -23,6 +23,8 @@ Then move the resulting `jar` file into the `./libs` folder of this project.
 ```
 
 ## Run Application
+
+Before you run the application you need to start Crate on `localhost:4200`.
 
 ```console
 ./gradlew clean bootRun
