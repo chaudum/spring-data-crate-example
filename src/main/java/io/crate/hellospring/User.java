@@ -29,7 +29,7 @@ public class User {
 
     @PersistenceConstructor
     public User(String firstName, String lastName, String email, Long dateJoined, String[] tags) {
-        this(firstName, lastName, email, dateJoined, tags, new HashMap<String, Object>());
+        this(firstName, lastName, email, dateJoined, tags, new HashMap<>());
     }
 
     @PersistenceConstructor

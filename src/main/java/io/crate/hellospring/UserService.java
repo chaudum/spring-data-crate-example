@@ -21,9 +21,7 @@ public class UserService {
     }
 
     public User createUser(String email, String firstName, String lastName) {
-        User user = new User(firstName, lastName, email, now());
-        userRepository.save(user);
-        return user;
+        return userRepository.save(new User(firstName, lastName, email, now()));
     }
 
     public void updateUser(User user) {
@@ -39,4 +37,3 @@ public class UserService {
         userRepository.refreshTable();
     }
 }
-
