@@ -2,20 +2,6 @@
 
 **Spring Boot Application with [Spring Data Crate](https://github.com/crate/spring-data-crate)**
 
-## Requirements
-
-This sample app requires the `crate-spring-data` jar file which is not available
-via a public repository, but must be built from
-[source](https://github.com/crate/spring-data-crate).
-
-```console
-git clone git@github.com:crate/spring-data-crate.git
-cd spring-data-crate
-mvn clean install -DskipTests
-```
-
-Then move the resulting `jar` file into the `./libs` folder of this project.
-
 ## Setup
 
 ```console
@@ -24,7 +10,8 @@ Then move the resulting `jar` file into the `./libs` folder of this project.
 
 ## Run Application
 
-Before you run the application you need to start Crate on `localhost:4200`.
+Before you run the application you need to start Crate locally on the port
+`4200` for http and `4300` for transport.
 
 ```console
 ./gradlew clean bootRun
